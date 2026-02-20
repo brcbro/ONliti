@@ -7,11 +7,18 @@ import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { Metadata } from "next";
 
 type Props = {
-    readonly params: { readonly slug: string };
+    readonly params: Promise<{ slug: string }>;
 };
 
+export async function generateStaticParams() {
+    return seoData.services.map((service) => ({
+        slug: service.id,
+    }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const service = seoData.services.find((s) => s.id === params.slug);
+    const { slug } = await params;
+    const service = seoData.services.find((s) => s.id === slug);
 
     if (!service) {
         return { title: 'Service Not Found' };
@@ -26,8 +33,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default function ServicePage({ params }: Props) {
-    const service = seoData.services.find((s) => s.id === params.slug);
+export default async function ServicePage({ params }: Props) {
+    const { slug } = await params;
+    const service = seoData.services.find((s) => s.id === slug);
 
     if (!service) {
         notFound();
