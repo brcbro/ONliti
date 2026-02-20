@@ -3,15 +3,19 @@
 import Hero3D from "@/components/Hero3D";
 import Services from "@/components/Services";
 import ProjectShowcase from "@/components/ProjectShowcase";
+import TrustSignals from "@/components/TrustSignals";
 import Contact from "@/components/Contact";
 import { MoveRight } from "lucide-react";
 import { motion } from "framer-motion";
 import Magnetic from "@/components/Magnetic";
 import Link from "next/link";
+import SchemaMarkup from "@/components/SchemaMarkup";
+import { serviceSchema, faqSchema } from "@/config/seo";
 
 export default function Home() {
     return (
         <main className="snap-container">
+            <SchemaMarkup schema={[...serviceSchema, faqSchema]} />
             {/* Cinematic Hero Section */}
             <section className="snap-section relative overflow-hidden h-screen flex items-end justify-center">
                 <div className="absolute inset-0 pointer-events-none">
@@ -51,9 +55,12 @@ export default function Home() {
                         </motion.p>
                     </div>
 
+                    {/* Structurally sound, SEO-optimized single H1 */}
+                    <h1 className="sr-only">Your Brand Weaponized. High-Conversion B2B and E-Commerce Landing Pages.</h1>
+
                     {/* Main Headline — Left-aligned, editorial with grain */}
-                    <div className="overflow-hidden">
-                        <motion.h1
+                    <div className="overflow-hidden" aria-hidden="true">
+                        <motion.div
                             initial={{ y: 120, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 1, ease: [0.33, 1, 0.68, 1] }}
@@ -67,10 +74,10 @@ export default function Home() {
                             }}
                         >
                             YOUR BRAND
-                        </motion.h1>
+                        </motion.div>
                     </div>
-                    <div className="overflow-hidden">
-                        <motion.h1
+                    <div className="overflow-hidden" aria-hidden="true">
+                        <motion.div
                             initial={{ y: 120, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ duration: 1, delay: 0.12, ease: [0.33, 1, 0.68, 1] }}
@@ -84,7 +91,7 @@ export default function Home() {
                             }}
                         >
                             WEAPONIZED.
-                        </motion.h1>
+                        </motion.div>
                     </div>
 
                     {/* Divider + CTA row */}
@@ -123,6 +130,9 @@ export default function Home() {
 
             {/* Project Showcase Section */}
             <ProjectShowcase />
+
+            {/* Testimonials & Trust Signals */}
+            <TrustSignals />
 
             {/* Final Contact Section */}
             <Contact />

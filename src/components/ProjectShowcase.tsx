@@ -79,7 +79,7 @@ const Card = ({ project, index, progress, range, targetScale }: { project: typeo
                     </div>
 
                     <div className="space-y-6">
-                        <h2 className="text-3xl md:text-7xl font-black tracking-tighter mix-blend-difference leading-[0.9]">{project.title}</h2>
+                        <h3 className="text-3xl md:text-7xl font-black tracking-tighter mix-blend-difference leading-[0.9]">{project.title}</h3>
                         <p className="text-gray-300 max-w-md text-sm md:text-lg font-light leading-relaxed">{project.description}</p>
 
                         <div className="pt-4">

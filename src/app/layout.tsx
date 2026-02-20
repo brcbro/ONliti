@@ -19,14 +19,31 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-    title: "Onlitit | Landing pages for all | Digital Revolutionizer",
-    description: "Award-winning digital experiences.",
+    metadataBase: new URL("https://onliti.com"),
+    title: {
+        template: "%s | ONliti",
+        default: "ONliti | High-conversion B2B & E-commerce Landing Pages",
+    },
+    description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
+    alternates: {
+        canonical: "/",
+    },
     icons: {
         icon: "/logo.png",
     },
 };
 
 import ScrollProgress from "@/components/ScrollProgress";
+import SchemaMarkup from "@/components/SchemaMarkup";
+
+const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "ONliti",
+    "url": "https://onliti.com",
+    "logo": "https://onliti.com/logo.png",
+    "description": "We design fast, SEO-optimized landing pages to generate leads and sales.",
+};
 
 export default function RootLayout({
     children,
@@ -36,6 +53,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${syne.variable} ${spaceGrotesk.variable}`}>
             <body className="antialiased font-sans bg-[#050505] text-white selection:bg-purple-500/30 cursor-none">
+                <SchemaMarkup schema={organizationSchema} />
                 <SmoothScroll>
                     <ScrollProgress />
                     <CustomCursor />
