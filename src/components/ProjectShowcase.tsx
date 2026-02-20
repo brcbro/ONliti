@@ -83,8 +83,8 @@ const Card = ({ project, index, progress, range, targetScale }: { project: typeo
                         <p className="text-gray-300 max-w-md text-sm md:text-lg font-light leading-relaxed">{project.description}</p>
 
                         <div className="pt-4">
-                            <Link href="#" className="inline-flex items-center gap-2 text-white font-bold border-b border-white pb-1 hover:opacity-70 transition-opacity">
-                                VIEW CASE STUDY <ArrowUpRight size={18} />
+                            <Link href="/contact" className="inline-flex items-center gap-2 text-white font-bold border-b border-white pb-1 hover:opacity-70 transition-opacity">
+                                DISCUSS PROJECT <ArrowUpRight size={18} />
                             </Link>
                         </div>
                     </div>
