@@ -66,12 +66,24 @@ export default function ServicePage({ params }: Props) {
                         {service.description}
                     </p>
 
-                    {/* Add long description here */}
+                    {/* Long Description */}
                     {service.longDescription && (
-                        <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-sm text-left">
+                        <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-sm text-left mb-12">
                             <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
                                 {service.longDescription}
                             </p>
+                        </div>
+                    )}
+
+                    {/* Highlight Metric */}
+                    {service.highlightMetric && (
+                        <div className="max-w-xs mx-auto text-center mt-8">
+                            <div className="text-6xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500 mb-2">
+                                {service.highlightMetric}
+                            </div>
+                            <div className="text-sm font-semibold tracking-wider text-blue-500 uppercase">
+                                {service.highlightMetricDesc}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -91,6 +103,24 @@ export default function ServicePage({ params }: Props) {
                                         <ArrowUpRight className="text-blue-500" size={24} />
                                     </div>
                                     <h4 className="text-xl font-bold text-white">{benefit}</h4>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Tech Stack Section */}
+            {service.techStack && service.techStack.length > 0 && (
+                <section className="snap-section bg-[#050505] py-20 px-4 md:px-12 relative border-b border-white/5">
+                    <div className="container mx-auto max-w-6xl text-center">
+                        <h2 className="text-sm tracking-[0.3em] text-blue-500 font-bold mb-4">TEARDOWN</h2>
+                        <h3 className="text-3xl md:text-5xl font-black mb-12 tracking-tighter">OUR ARSENAL</h3>
+
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {service.techStack.map((tech, idx) => (
+                                <div key={idx} className="px-6 py-3 rounded-full border border-white/10 bg-white/5 text-white/80 font-medium hover:bg-white/10 hover:text-white transition-colors">
+                                    {tech}
                                 </div>
                             ))}
                         </div>
