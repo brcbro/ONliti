@@ -67,17 +67,17 @@ export default async function ServicePage({ params }: Props) {
                         EXPERTISE
                     </div>
 
-                    <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tighter mix-blend-difference leading-[0.9]">
+                    <h1 className="text-4xl md:text-8xl font-black mb-6 tracking-tighter mix-blend-difference leading-[1.1] md:leading-[0.9]">
                         {service.title.toUpperCase()}
                     </h1>
-                    <p className="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-12">
+                    <p className="text-lg md:text-2xl text-gray-400 font-light max-w-2xl mx-auto leading-relaxed mb-8 md:mb-12">
                         {service.description}
                     </p>
 
                     {/* Long Description */}
                     {service.longDescription && (
-                        <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-sm text-left mb-12">
-                            <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
+                        <div className="max-w-3xl mx-auto p-6 md:p-8 rounded-2xl md:rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-sm text-left mb-8 md:mb-12">
+                            <p className="text-base md:text-xl text-gray-300 leading-relaxed font-light">
                                 {service.longDescription}
                             </p>
                         </div>
@@ -85,11 +85,11 @@ export default async function ServicePage({ params }: Props) {
 
                     {/* Highlight Metric */}
                     {service.highlightMetric && (
-                        <div className="max-w-xs mx-auto text-center mt-8">
-                            <div className="text-6xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500 mb-2">
+                        <div className="max-w-xs mx-auto text-center mt-6 md:mt-8">
+                            <div className="text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500 mb-2">
                                 {service.highlightMetric}
                             </div>
-                            <div className="text-sm font-semibold tracking-wider text-blue-500 uppercase">
+                            <div className="text-xs md:text-sm font-semibold tracking-wider text-blue-500 uppercase">
                                 {service.highlightMetricDesc}
                             </div>
                         </div>
@@ -138,18 +138,18 @@ export default async function ServicePage({ params }: Props) {
 
             {/* Deliverables/Features Section */}
             <section className="snap-section bg-[#050505] py-20 px-4 md:px-12 relative">
-                <div className="container mx-auto grid md:grid-cols-2 gap-16 max-w-6xl">
+                <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-6xl">
                     <div>
                         <h2 className="text-sm tracking-[0.3em] text-blue-500 font-bold mb-4">CAPABILITIES</h2>
                         <h3 className="text-3xl md:text-5xl font-black mb-8 tracking-tighter">WHAT WE DELIVER</h3>
 
                         <div className="flex flex-col gap-4">
                             {service.features.map((feature, idx) => (
-                                <div key={idx} className="flex items-start gap-4 p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
-                                    <CheckCircle2 className="text-blue-500 mt-1 shrink-0" size={24} />
+                                <div key={idx} className="flex items-start gap-4 p-5 md:p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
+                                    <CheckCircle2 className="text-blue-500 mt-1 shrink-0 w-5 h-5 md:w-6 md:h-6" />
                                     <div>
-                                        <h4 className="text-xl font-bold mb-1">{feature}</h4>
-                                        <p className="text-gray-400 text-sm">Strategic implementation built to scale.</p>
+                                        <h4 className="text-lg md:text-xl font-bold mb-1">{feature}</h4>
+                                        <p className="text-gray-400 text-xs md:text-sm">Strategic implementation built to scale.</p>
                                     </div>
                                 </div>
                             ))}
