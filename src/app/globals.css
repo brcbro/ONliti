@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --font-syne: var(--font-syne);
+  --font-space: var(--font-space);
+
+  --color-background: #050505;
+  --color-foreground: #ffffff;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-space), sans-serif;
+  overflow-x: hidden;
+  letter-spacing: 0.02em;
+  /* Wide spacing for UI text */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-syne), sans-serif;
+  letter-spacing: -0.02em;
+  /* Tight spacing for Display Headings */
+}
+
+/* Custom Scroll Snap - REMOVED for Lenis Compatibility */
+.snap-container {
+  /* scroll-snap-type: y mandatory; */
+  /* overflow-y: scroll;  <-- Conflicts with Lenis */
+  /* height: 100vh;       <-- Conflicts with Lenis */
+}
+
+.snap-section {
+  /* scroll-snap-align: start; */
+  min-height: 100vh;
+  /* Use min-height instead of fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Premium Glass Button */
+.nav-btn {
+  outline: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 100px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.nav-btn .btn-wrap {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 6px 18px;
+  letter-spacing: 0.05em;
+}
+
+.nav-btn .btn-wrap p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(180deg, #222 0%, #111 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.nav-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
