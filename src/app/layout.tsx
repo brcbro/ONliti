@@ -19,8 +19,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-    title: "ONliti Creative | Digital Alchemy",
+    title: "Onlitit | Landing pages for all | Digital Revolutionizer",
     description: "Award-winning digital experiences.",
+    icons: {
+        icon: "/logo.png",
+    },
 };
 
 import ScrollProgress from "@/components/ScrollProgress";
