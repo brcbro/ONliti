@@ -2,17 +2,40 @@
 export const seoData = {
     services: [
         {
-            id: "ecommerce-landing-pages",
-            title: "E-Commerce Landing Pages",
-            description: "High-converting landing pages tailored for e-commerce brands.",
-            url: "/services/ecommerce-landing-pages",
+            id: "digital-ecosystems",
+            title: "Digital Ecosystems",
+            description: "Full-stack web applications built for scale and performance. We design lightning-fast architectures mapped to convert.",
+            url: "/services/digital-ecosystems",
+            features: ["Next.js/React Architecture", "Scalable Microservices", "CMS & Database Optimization", "Technical SEO Audits"],
         },
         {
-            id: "lead-generation-pages",
-            title: "Lead Generation Landing Pages",
-            description: "Capture more leads with our optimized B2B landing pages.",
-            url: "/services/lead-generation-pages",
+            id: "mobile-innovation",
+            title: "Mobile Innovation",
+            description: "Native and cross-platform mobile applications that define user behavior and provide frictionless digital journeys.",
+            url: "/services/mobile-innovation",
+            features: ["React Native Development", "App Store Optimization", "User-Centric UI/UX", "Seamless API Integrations"],
         },
+        {
+            id: "brand-identity",
+            title: "Brand Identity",
+            description: "Visual languages that speak louder than words. We create digital brands built for the modern era.",
+            url: "/services/brand-identity",
+            features: ["Logo & Visual Design", "Design Systems", "Brand Architecture", "Copywriting & Tone"],
+        },
+        {
+            id: "technical-strategy",
+            title: "Technical Strategy",
+            description: "Architecture and technical consulting resolving complex digital roadblocks for enterprise clients.",
+            url: "/services/technical-strategy",
+            features: ["Architecture Reviews", "Cloud Migrations", "Security Audits", "CTO-as-a-Service"],
+        },
+        {
+            id: "growth-engineering",
+            title: "Growth Engineering",
+            description: "Data-driven development designed explicitly to accelerate your business KPIs and elevate your conversion rates.",
+            url: "/services/growth-engineering",
+            features: ["Conversion Rate Optimization", "A/B Testing Frameworks", "Analytics Integrations", "Marketing Automation"],
+        }
     ],
     faqs: [
         {

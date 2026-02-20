@@ -1,21 +1,24 @@
 import { MetadataRoute } from 'next';
+import { seoData } from '@/config/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://onliti.com';
 
-    // These should eventually map to your dynamic routes or CMS
-    const routes = [
-        '',
-        '/services/ecommerce-landing-pages',
-        '/services/lead-generation-pages',
-        '/industries/real-estate-landing-pages',
-        '/blog/how-to-increase-landing-page-conversion-rate',
+    const dynamicRoutes = seoData.services.map((service) => ({
+        url: `${baseUrl}${service.url}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }));
+
+    const staticRoutes = [
+        {
+            url: `${baseUrl}/`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 1.0,
+        }
     ];
 
-    return routes.map((route) => ({
-        url: `${baseUrl}${route}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly',
-        priority: route === '' ? 1 : 0.8,
-    }));
+    return [...staticRoutes, ...dynamicRoutes];
 }
