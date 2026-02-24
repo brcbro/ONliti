@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     icons: {
         icon: "/logo.png",
     },
+    verification: {
+        google: "Dmrux6CKde0sSNNUUWAMBsfyXzx53FkjatKTNVf2wJc",
+    },
 };
 
 import ScrollProgress from "@/components/ScrollProgress";
