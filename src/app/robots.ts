@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: ['*', 'GPTBot', 'ClaudeBot', 'Google-Extended'],
             allow: '/',
         },
-        sitemap: 'https://onliti.com/sitemap.xml',
+        sitemap: 'https://onliti.vercel.app/sitemap.xml',
     };
 }

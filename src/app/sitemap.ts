@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { seoData } from '@/config/seo';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://onliti.com';
+    const baseUrl = 'https://onliti.vercel.app';
 
     const dynamicRoutes = seoData.services.map((service) => ({
         url: `${baseUrl}${service.url}`,

@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://onliti.com"),
+    metadataBase: new URL("https://onliti.vercel.app"),
     title: {
         template: "%s | ONliti",
         default: "ONliti | High-conversion B2B & E-commerce Landing Pages",
@@ -43,8 +43,8 @@ const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "ONliti",
-    "url": "https://onliti.com",
-    "logo": "https://onliti.com/logo.png",
+    "url": "https://onliti.vercel.app",
+    "logo": "https://onliti.vercel.app/logo.png",
     "description": "We design fast, SEO-optimized landing pages to generate leads and sales.",
 };
 
