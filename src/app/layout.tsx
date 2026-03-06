@@ -20,11 +20,20 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://onliti.vercel.app"),
+    applicationName: "ONliti",
     title: {
         template: "%s | ONliti",
         default: "ONliti | High-conversion B2B & E-commerce Landing Pages",
     },
     description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
+    openGraph: {
+        siteName: "ONliti",
+        type: "website",
+        title: "ONliti | High-conversion B2B & E-commerce Landing Pages",
+        description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
+        url: "https://onliti.vercel.app",
+        images: [{ url: "/logo.png" }],
+    },
     alternates: {
         canonical: "/",
     },
