@@ -35,7 +35,7 @@ export default function Navbar() {
                         : 'bg-white/5 border-white/5 shadow-none'}
                 `}>
                     <Link href="/" className="flex items-center shrink-0" onClick={() => setMobileOpen(false)}>
-                        <Image src="/logo.png" alt="ONliti" width={64} height={22} className="h-5 w-auto" />
+                        <Image src="/newlogo.png" alt="ONliti" width={64} height={22} className="h-5 w-auto" />
                     </Link>
 
                     <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">

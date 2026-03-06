@@ -32,13 +32,13 @@ export const metadata: Metadata = {
         title: "ONliti | High-conversion B2B & E-commerce Landing Pages",
         description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
         url: "https://onliti.vercel.app",
-        images: [{ url: "/logo.png" }],
+        images: [{ url: "/newlogo.png" }],
     },
     alternates: {
         canonical: "/",
     },
     icons: {
-        icon: "/logo.png",
+        icon: "/newlogo.png",
     },
     verification: {
         google: "Dmrux6CKde0sSNNUUWAMBsfyXzx53FkjatKTNVf2wJc",
@@ -53,7 +53,7 @@ const organizationSchema = {
     "@type": "Organization",
     "name": "ONliti",
     "url": "https://onliti.vercel.app",
-    "logo": "https://onliti.vercel.app/logo.png",
+    "logo": "https://onliti.vercel.app/newlogo.png",
     "description": "We design fast, SEO-optimized landing pages to generate leads and sales.",
 };
 
