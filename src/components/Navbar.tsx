@@ -40,6 +40,7 @@ export default function Navbar() {
 
                     <div className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
                         <Link href="/#work" className="text-xs font-medium hover:text-violet-400 transition-colors">Work</Link>
+                        <Link href="/about" className="text-xs font-medium hover:text-violet-400 transition-colors">About</Link>
                         <Link href="/#services" className="text-xs font-medium hover:text-violet-400 transition-colors">Services</Link>
                     </div>
 
@@ -75,6 +76,13 @@ export default function Navbar() {
                             onClick={() => setMobileOpen(false)}
                         >
                             Work
+                        </Link>
+                        <Link
+                            href="/about"
+                            className="text-3xl font-bold tracking-tight text-white hover:text-violet-400 transition-colors"
+                            onClick={() => setMobileOpen(false)}
+                        >
+                            About
                         </Link>
                         <Link
                             href="/#services"
