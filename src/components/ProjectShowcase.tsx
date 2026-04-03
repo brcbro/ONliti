@@ -7,13 +7,13 @@ import Link from 'next/link';
 
 const projects = [
     {
-        title: "NEBULA OS",
-        category: "System Architecture",
-        description: "A next-generation operating system interface designed for quantum computing environments.",
+        title: "DREAM GREEN",
+        category: "E-commerce Website",
+        description: "A premium digital experience for gifting plants in Surat, designed for seamless conversion.",
         video: "https://framerusercontent.com/assets/3617at5Ss1Lc4HOX3Z7QNLnUP8.mp4",
         poster: "https://framerusercontent.com/images/gfMLghOxL9U41yIA4AywQpuL0I.png?width=1600&height=1600",
-        year: "2025",
-        color: "#6366f1"
+        year: "2026",
+        color: "#22c55e"
     },
     {
         title: "QUANTUM FINANCE",
