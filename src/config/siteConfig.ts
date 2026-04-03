@@ -5,6 +5,7 @@
 export const siteConfig = {
     // ── Brand ──────────────────────────────────
     name: "ONliti",
+    url: "https://onliti.works",
     tagline: "Digital Alchemy Since 2024",
     madeBy: "Bhavya",
 

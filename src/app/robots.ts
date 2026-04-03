@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { siteConfig } from '@/config/siteConfig';
 
 export default function robots(): MetadataRoute.Robots {
     return {
@@ -6,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: ['*', 'GPTBot', 'ClaudeBot', 'Google-Extended'],
             allow: '/',
         },
-        sitemap: 'https://onliti.vercel.app/sitemap.xml',
+        sitemap: `${siteConfig.url}/sitemap.xml`,
     };
 }

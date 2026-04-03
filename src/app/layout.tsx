@@ -5,6 +5,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
 import Noise from "@/components/Noise";
+import { siteConfig } from "@/config/siteConfig";
 
 const syne = Syne({
     subsets: ["latin"],
@@ -19,23 +20,20 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://onliti.vercel.app"),
-    applicationName: "ONliti",
+    metadataBase: new URL(siteConfig.url),
+    applicationName: siteConfig.name,
     title: {
-        template: "%s | ONliti",
+        template: `%s | ${siteConfig.name}`,
         default: "ONliti | High-conversion B2B & E-commerce Landing Pages",
     },
     description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
     openGraph: {
-        siteName: "ONliti",
+        siteName: siteConfig.name,
         type: "website",
         title: "ONliti | High-conversion B2B & E-commerce Landing Pages",
         description: "We design fast, SEO-optimized landing pages to generate leads and sales for local businesses, startups, and e-commerce brands.",
-        url: "https://onliti.vercel.app",
+        url: siteConfig.url,
         images: [{ url: "/newlogo.png" }],
-    },
-    alternates: {
-        canonical: "/",
     },
     icons: {
         icon: "/newlogo.png",
@@ -51,9 +49,9 @@ import SchemaMarkup from "@/components/SchemaMarkup";
 const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "ONliti",
-    "url": "https://onliti.vercel.app",
-    "logo": "https://onliti.vercel.app/newlogo.png",
+    "name": siteConfig.name,
+    "url": siteConfig.url,
+    "logo": `${siteConfig.url}/newlogo.png`,
     "description": "We design fast, SEO-optimized landing pages to generate leads and sales.",
 };
 

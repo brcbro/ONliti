@@ -113,7 +113,7 @@ export const serviceSchema = seoData.services.map((service) => ({
         "@type": "Organization",
         "name": "ONliti",
     },
-    "url": `https://onliti.com${service.url}`,
+    "url": `https://onliti.works${service.url}`,
 }));
 
 export const faqSchema = {

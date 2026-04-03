@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { seoData } from '@/config/seo';
+import { siteConfig } from '@/config/siteConfig';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://onliti.vercel.app';
+    const baseUrl = siteConfig.url;
 
     const dynamicRoutes = seoData.services.map((service) => ({
         url: `${baseUrl}${service.url}`,
@@ -17,6 +18,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: new Date(),
             changeFrequency: 'weekly' as const,
             priority: 1.0,
+        },
+        {
+            url: `${baseUrl}/services`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'weekly' as const,
+            priority: 0.9,
         }
     ];
 
