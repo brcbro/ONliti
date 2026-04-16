@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from '@/lib/gsap';
 
 export default function CustomCursor() {
@@ -8,8 +8,15 @@ export default function CustomCursor() {
     const pillRef = useRef<HTMLDivElement>(null);
     const labelRef = useRef<HTMLSpanElement>(null);
     const currentLabel = useRef('');
+    const [isTouchDevice, setIsTouchDevice] = useState(true);
 
     useEffect(() => {
+        const hasPointer = window.matchMedia('(pointer: fine)').matches;
+        setIsTouchDevice(!hasPointer);
+    }, []);
+
+    useEffect(() => {
+        if (isTouchDevice) return;
         if (!dotRef.current || !pillRef.current || !labelRef.current) return;
 
         const dot = dotRef.current;
@@ -117,7 +124,9 @@ export default function CustomCursor() {
             window.removeEventListener('mousedown', onMouseDown);
             window.removeEventListener('mouseup', onMouseUp);
         };
-    }, []);
+    }, [isTouchDevice]);
+
+    if (isTouchDevice) return null;
 
     return (
         <>

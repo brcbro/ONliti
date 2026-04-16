@@ -62,7 +62,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className={`${syne.variable} ${spaceGrotesk.variable}`}>
-            <body className="antialiased font-sans bg-[#050505] text-white selection:bg-purple-500/30 cursor-none">
+            <body className="antialiased font-sans bg-[#050505] text-white selection:bg-purple-500/30 md:cursor-none">
                 <SchemaMarkup schema={organizationSchema} />
                 <SmoothScroll>
                     <ScrollProgress />
