@@ -1,8 +1,9 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { ArrowUpRight, Code, PenTool, BarChart3, Globe, Smartphone, Zap } from 'lucide-react';
+import { useRef } from 'react';
+import { ArrowUpRight, Code, PenTool, BarChart3, Globe, Smartphone } from 'lucide-react';
 import Link from 'next/link';
+import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
 
 const services = [
     {
@@ -48,32 +49,114 @@ const services = [
 ];
 
 export default function Services() {
+    const sectionRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (!sectionRef.current) return;
+
+        // Section heading reveal
+        const headingTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.services-header',
+                start: 'top 80%',
+                toggleActions: 'play none none none',
+            },
+        });
+
+        headingTl.from('.services-title', {
+            y: 80,
+            autoAlpha: 0,
+            duration: 1,
+            ease: 'power4.out',
+        });
+
+        headingTl.from('.services-divider', {
+            scaleX: 0,
+            duration: 1,
+            ease: 'power3.inOut',
+            transformOrigin: 'left center',
+        }, '-=0.5');
+
+        // Service cards - batch stagger reveal
+        ScrollTrigger.batch('.service-card', {
+            start: 'top 85%',
+            onEnter: (batch) => {
+                gsap.from(batch, {
+                    y: 60,
+                    autoAlpha: 0,
+                    duration: 0.8,
+                    stagger: 0.12,
+                    ease: 'power3.out',
+                });
+            },
+            once: true,
+        });
+
+        // Card hover magnetic tilt via GSAP
+        const cards = sectionRef.current.querySelectorAll('.service-card');
+        cards.forEach((card) => {
+            const el = card as HTMLElement;
+            const glow = el.querySelector('.card-glow') as HTMLElement;
+
+            el.addEventListener('mouseenter', () => {
+                gsap.to(el, { scale: 1.02, duration: 0.4, ease: 'power2.out' });
+                if (glow) gsap.to(glow, { autoAlpha: 1, duration: 0.4 });
+            });
+
+            el.addEventListener('mouseleave', () => {
+                gsap.to(el, { scale: 1, rotationX: 0, rotationY: 0, duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+                if (glow) gsap.to(glow, { autoAlpha: 0, duration: 0.4 });
+            });
+
+            el.addEventListener('mousemove', (e: Event) => {
+                const me = e as MouseEvent;
+                const rect = el.getBoundingClientRect();
+                const x = me.clientX - rect.left;
+                const y = me.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                gsap.to(el, {
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    duration: 0.3,
+                    ease: 'power2.out',
+                    transformPerspective: 800,
+                });
+
+                if (glow) {
+                    gsap.to(glow, {
+                        x: x - rect.width / 2,
+                        y: y - rect.height / 2,
+                        duration: 0.3,
+                    });
+                }
+            });
+        });
+
+    }, { scope: sectionRef });
+
     return (
-        <section id="services" className="snap-section min-h-screen bg-[#050505] py-16 md:py-24 px-4 md:px-6 relative flex items-center">
+        <section ref={sectionRef} id="services" className="snap-section min-h-screen bg-[#050505] py-16 md:py-24 px-4 md:px-6 relative flex items-center">
             <div className="container mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="mb-16 overflow-hidden"
-                >
-                    <h2 className="text-[8vw] md:text-[6vw] font-black leading-none tracking-tighter text-white opacity-20">
+                <div className="services-header mb-16 overflow-hidden">
+                    <h2 className="services-title text-[8vw] md:text-[6vw] font-black leading-none tracking-tighter text-white opacity-20">
                         EXPERTISE
                     </h2>
-                    <div className="h-[1px] w-full bg-white/10 mt-4"></div>
-                </motion.div>
+                    <div className="services-divider h-[1px] w-full bg-white/10 mt-4"></div>
+                </div>
 
                 <div className="grid grid-cols-12 gap-4 md:gap-8">
                     {services.map((service, index) => (
                         <Link href={`/services/${service.id}`} key={index} className={`block col-span-12 ${service.col.includes('md:col-span') ? service.col.split(' ').filter(c => c.startsWith('md:')).join(' ') : ''}`}>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                className={`h-full group relative overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/5 bg-white/[0.02] p-6 md:p-12 transition-colors duration-300 hover:bg-white/[0.05] hover:border-white/10`}
+                            <div
+                                className={`service-card h-full group relative overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/5 bg-white/[0.02] p-6 md:p-12 transition-colors duration-300 hover:border-white/10`}
+                                style={{ willChange: 'transform' }}
                             >
-                                <div className={`absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${service.bg}`}></div>
+                                <div className={`card-glow absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 invisible ${service.bg}`}></div>
 
                                 <div className="relative z-10 h-full flex flex-col justify-between gap-8">
                                     <div className="flex justify-between items-start">
@@ -88,7 +171,7 @@ export default function Services() {
                                         <p className="text-gray-400 text-sm md:text-lg">{service.description}</p>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         </Link>
                     ))}
                 </div>

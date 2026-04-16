@@ -1,13 +1,14 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { ArrowUpRight, Mail, MapPin, Phone, CheckCircle, Loader2 } from 'lucide-react';
-import { useState } from 'react';
 import { siteConfig } from '@/config/siteConfig';
+import { gsap, useGSAP } from '@/lib/gsap';
 
 export default function ContactClient() {
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [errorMsg, setErrorMsg] = useState('');
+    const containerRef = useRef<HTMLDivElement>(null);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -18,7 +19,6 @@ export default function ContactClient() {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
-        // Add Web3Forms access key
         data.access_key = siteConfig.web3formsKey;
         data.subject = `New inquiry from ${data.name} — ${siteConfig.name}`;
         data.from_name = siteConfig.name;
@@ -45,21 +45,60 @@ export default function ContactClient() {
         }
     }
 
+    useGSAP(() => {
+        if (!containerRef.current) return;
+
+        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+        // Left column - video + info (use opacity only, not autoAlpha,
+        // so children don't inherit visibility:hidden)
+        tl.from('.contact-left-video', {
+            x: -60,
+            opacity: 0,
+            duration: 1,
+        }, 0.1);
+
+        // Contact badges stagger (standalone, not in timeline)
+        gsap.fromTo('.contact-badge',
+            { y: 20, opacity: 0, scale: 0.9 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.5, stagger: 0.1, delay: 0.5, ease: 'back.out(1.7)' }
+        );
+
+        // Right column - form
+        tl.from('.contact-right', {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+        }, 0.3);
+
+        // Form fields stagger
+        tl.from('.form-field', {
+            y: 25,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.1,
+        }, 0.8);
+
+        // Submit button
+        tl.from('.form-submit', {
+            y: 20,
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.6,
+            ease: 'back.out(1.5)',
+        }, '-=0.2');
+
+    }, { scope: containerRef });
+
     return (
-        <main className="min-h-screen bg-[#050505] text-white pt-24 md:pt-32 pb-12 px-4 md:px-6 flex items-center justify-center relative overflow-hidden">
+        <main ref={containerRef} className="min-h-screen bg-[#050505] text-white pt-24 md:pt-32 pb-12 px-4 md:px-6 flex items-center justify-center relative overflow-hidden">
 
             <div className="container mx-auto max-w-6xl relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 items-stretch">
 
-                    {/* Left Column: Video + Info */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                        className="space-y-8 flex flex-col"
-                    >
-                        {/* Video */}
-                        <div className="relative rounded-[2rem] overflow-hidden border border-white/10 flex-1">
+                    {/* Left Column */}
+                    <div className="space-y-8 flex flex-col">
+                        <div className="contact-left-video relative rounded-[2rem] overflow-hidden border border-white/10 flex-1">
                             <video
                                 src="https://framerusercontent.com/assets/wg6Qomh5thQN52habSaotTAXk9c.mp4"
                                 loop
@@ -92,34 +131,24 @@ export default function ContactClient() {
                             </div>
                         </div>
 
-                        {/* Contact Details */}
                         <div className="flex flex-col sm:flex-row flex-wrap gap-3 md:gap-6">
                             {[
                                 { icon: <Mail size={18} />, label: "EMAIL", value: siteConfig.email, href: `mailto:${siteConfig.email}` },
                                 { icon: <Phone size={18} />, label: "PHONE", value: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/\s/g, '')}` },
                                 { icon: <MapPin size={18} />, label: "STUDIO", value: siteConfig.location, href: "#" },
                             ].map((item, idx) => (
-                                <a key={idx} href={item.href} className="group flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-full bg-white/5 border border-white/5 hover:bg-white hover:text-black transition-all duration-300">
+                                <a key={idx} href={item.href} className="contact-badge group flex items-center gap-3 px-4 py-2.5 md:px-5 md:py-3 rounded-full bg-white/5 border border-white/5 hover:bg-white hover:text-black transition-all duration-300">
                                     {item.icon}
                                     <span className="text-xs md:text-sm font-bold tracking-wide">{item.value}</span>
                                 </a>
                             ))}
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {/* Right Column: Form */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="bg-white/[0.03] border border-white/10 rounded-2xl md:rounded-[2rem] p-6 md:p-12 flex flex-col justify-center"
-                    >
+                    {/* Right Column */}
+                    <div className="contact-right bg-white/[0.03] border border-white/10 rounded-2xl md:rounded-[2rem] p-6 md:p-12 flex flex-col justify-center">
                         {status === 'success' ? (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex flex-col items-center justify-center text-center py-12 gap-6"
-                            >
+                            <div className="flex flex-col items-center justify-center text-center py-12 gap-6">
                                 <CheckCircle size={48} className="text-green-400" />
                                 <h3 className="text-2xl font-black tracking-tight">SENT SUCCESSFULLY</h3>
                                 <p className="text-gray-400">We&apos;ll get back to you within 24 hours.</p>
@@ -129,26 +158,26 @@ export default function ContactClient() {
                                 >
                                     Send another message
                                 </button>
-                            </motion.div>
+                            </div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-8">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="space-y-2 group">
+                                    <div className="form-field space-y-2 group">
                                         <label className="text-xs font-bold tracking-[0.2em] text-gray-500 ml-1 group-focus-within:text-white transition-colors">NAME</label>
                                         <input name="name" type="text" required className="w-full bg-transparent border-b border-white/10 py-4 text-lg outline-none focus:border-white transition-all placeholder:text-gray-700" placeholder="John Doe" />
                                     </div>
-                                    <div className="space-y-2 group">
+                                    <div className="form-field space-y-2 group">
                                         <label className="text-xs font-bold tracking-[0.2em] text-gray-500 ml-1 group-focus-within:text-white transition-colors">COMPANY</label>
                                         <input name="company" type="text" className="w-full bg-transparent border-b border-white/10 py-4 text-lg outline-none focus:border-white transition-all placeholder:text-gray-700" placeholder="Acme Inc." />
                                     </div>
                                 </div>
 
-                                <div className="space-y-2 group">
+                                <div className="form-field space-y-2 group">
                                     <label className="text-xs font-bold tracking-[0.2em] text-gray-500 ml-1 group-focus-within:text-white transition-colors">EMAIL</label>
                                     <input name="email" type="email" required className="w-full bg-transparent border-b border-white/10 py-4 text-lg outline-none focus:border-white transition-all placeholder:text-gray-700" placeholder="john@example.com" />
                                 </div>
 
-                                <div className="space-y-2 group">
+                                <div className="form-field space-y-2 group">
                                     <label className="text-xs font-bold tracking-[0.2em] text-gray-500 ml-1 group-focus-within:text-white transition-colors">MESSAGE</label>
                                     <textarea name="message" rows={4} required className="w-full bg-transparent border-b border-white/10 py-4 text-lg outline-none focus:border-white transition-all placeholder:text-gray-700 resize-none" placeholder="Tell us about the project..."></textarea>
                                 </div>
@@ -157,7 +186,7 @@ export default function ContactClient() {
                                     <p className="text-red-400 text-sm">{errorMsg}</p>
                                 )}
 
-                                <div className="pt-8">
+                                <div className="form-submit pt-8">
                                     <button
                                         type="submit"
                                         disabled={status === 'sending'}
@@ -173,7 +202,7 @@ export default function ContactClient() {
                                 </div>
                             </form>
                         )}
-                    </motion.div>
+                    </div>
 
                 </div>
             </div>

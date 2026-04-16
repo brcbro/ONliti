@@ -1,47 +1,82 @@
 'use client';
 
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { usePathname } from 'next/navigation';
 
 export default function ScrollProgress() {
-    const { scrollYProgress } = useScroll();
+    const barRef = useRef<HTMLDivElement>(null);
+    const glowRef = useRef<HTMLDivElement>(null);
+    const waterRef = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
-    const scaleX = useSpring(scrollYProgress, {
-        stiffness: 100,
-        damping: 30,
-        restDelta: 0.001
-    });
+    const [isContact, setIsContact] = useState(false);
 
-    // All hooks must be called unconditionally (Rules of Hooks)
-    const waterHeight = useTransform(scrollYProgress, [0.9, 1], ["0vh", "100vh"]);
-    const waterRadiusL = useTransform(scrollYProgress, [0.9, 1], ["100%", "0%"]);
-    const waterRadiusR = useTransform(scrollYProgress, [0.9, 1], ["100%", "0%"]);
+    useEffect(() => {
+        setIsContact(pathname === '/contact');
+    }, [pathname]);
 
-    const isContact = pathname === '/contact';
+    useEffect(() => {
+        if (isContact || !barRef.current || !glowRef.current || !waterRef.current) return;
+
+        const bar = barRef.current;
+        const glow = glowRef.current;
+        const water = waterRef.current;
+
+        // Main progress bar
+        const progressTrigger = ScrollTrigger.create({
+            trigger: document.documentElement,
+            start: 'top top',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+                const progress = self.progress;
+                gsap.set(bar, { scaleX: progress, transformOrigin: 'left center' });
+                gsap.set(glow, { scaleX: progress, transformOrigin: 'left center' });
+            },
+        });
+
+        // Water fill effect at end
+        const waterTrigger = ScrollTrigger.create({
+            trigger: document.documentElement,
+            start: '90% bottom',
+            end: 'bottom bottom',
+            onUpdate: (self) => {
+                const progress = self.progress;
+                gsap.set(water, {
+                    height: `${progress * 100}vh`,
+                    borderTopLeftRadius: `${(1 - progress) * 100}%`,
+                    borderTopRightRadius: `${(1 - progress) * 100}%`,
+                });
+            },
+        });
+
+        return () => {
+            progressTrigger.kill();
+            waterTrigger.kill();
+        };
+    }, [isContact]);
 
     if (isContact) return null;
 
     return (
         <div className="fixed bottom-0 left-0 right-0 h-1.5 z-[1000] bg-white/5 pointer-events-none mix-blend-difference">
-            <motion.div
-                className="h-full bg-white origin-left"
-                style={{ scaleX }}
+            <div
+                ref={barRef}
+                className="h-full bg-white"
+                style={{ transform: 'scaleX(0)', transformOrigin: 'left center' }}
             />
 
             {/* Glow Effect */}
-            <motion.div
-                className="absolute top-0 left-0 right-0 h-full bg-white blur-[4px] opacity-50 origin-left"
-                style={{ scaleX }}
+            <div
+                ref={glowRef}
+                className="absolute top-0 left-0 right-0 h-full bg-white blur-[4px] opacity-50"
+                style={{ transform: 'scaleX(0)', transformOrigin: 'left center' }}
             />
 
             {/* Water Fill Effect */}
-            <motion.div
+            <div
+                ref={waterRef}
                 className="fixed bottom-0 left-0 right-0 bg-white z-[999]"
-                style={{
-                    height: waterHeight,
-                    borderTopLeftRadius: waterRadiusL,
-                    borderTopRightRadius: waterRadiusR,
-                }}
+                style={{ height: 0 }}
             />
         </div>
     );

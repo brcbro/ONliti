@@ -90,3 +90,32 @@ h6 {
   transform: translateY(1px);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
+
+/* GSAP visibility helper — elements animated by GSAP start invisible */
+.gsap-hidden {
+  visibility: hidden;
+}
+
+/* Smooth perspective for 3D card tilts */
+.perspective-card {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+/* Premium focus ring for form inputs */
+input:focus,
+textarea:focus {
+  border-color: rgba(139, 92, 246, 0.5) !important;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.08);
+}
+
+/* Reduced motion: kill all animations for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
