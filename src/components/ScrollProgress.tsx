@@ -55,6 +55,30 @@ export default function ScrollProgress() {
         };
     }, [isContact]);
 
+    // Route changes: recompute trigger bounds against the new page height
+    // and reset the bar/water so we don't carry stale progress between pages.
+    useEffect(() => {
+        if (isContact) return;
+        if (barRef.current) gsap.set(barRef.current, { scaleX: 0, transformOrigin: 'left center' });
+        if (glowRef.current) gsap.set(glowRef.current, { scaleX: 0, transformOrigin: 'left center' });
+        if (waterRef.current) gsap.set(waterRef.current, { height: 0 });
+
+        // Wait for the new route to paint, then refresh. Two RAFs covers the
+        // common case; a follow-up at 350ms catches late-loading content
+        // (videos, lazy images) that change the document height.
+        let raf1 = 0, raf2 = 0;
+        const t = window.setTimeout(() => ScrollTrigger.refresh(), 350);
+        raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+        });
+
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+            window.clearTimeout(t);
+        };
+    }, [pathname, isContact]);
+
     if (isContact) return null;
 
     return (
